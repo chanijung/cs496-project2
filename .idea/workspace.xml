@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c187704e-4342-4532-82c8-133fe505a985" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/cs496-project2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Madcamp1st/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/SectionPageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/SectionPageAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/contacts/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/contacts/Contact.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/contacts/ContactAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/contacts/ContactAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/contacts/Fragment_Contacts.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/contacts/Fragment_Contacts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/Fragment_Games.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/Fragment_Games.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/breakout/BreakoutActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/breakout/BreakoutActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/breakout/BreakoutEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/breakout/BreakoutEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/breakout/views/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/breakout/views/Ball.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/breakout/views/Brick.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/breakout/views/Brick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/breakout/views/Paddle.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/breakout/views/Paddle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/minesweeper/MinesweeperActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/minesweeper/MinesweeperActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/minesweeper/MinesweeperEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/minesweeper/MinesweeperEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/minesweeper/util/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/minesweeper/util/Generator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/minesweeper/views/grid/BaseCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/minesweeper/views/grid/BaseCell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/minesweeper/views/grid/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/minesweeper/views/grid/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/minesweeper/views/grid/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/minesweeper/views/grid/Grid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/snake/SnakeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/snake/SnakeActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/games/snake/SnakeEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/games/snake/SnakeEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/images/Fragment_Images.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/images/Fragment_Images.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/images/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/images/Image.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/images/ImageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/images/ImageAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp1st/images/MediaScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/java/com/example/madcamp2nd/images/MediaScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/res/layout/activity_minesweeper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/res/layout/activity_minesweeper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Madcamp1st/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Madcamp1st/build.gradle" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1mmGZohnuSepDhU7wys0QsrItld" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Madcamp1st" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c187704e-4342-4532-82c8-133fe505a985" name="Default Changelist" comment="" />
+      <created>1610091410394</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610091410394</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="415" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1610092309365">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="415" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610092309365" />
+    <state x="741" y="276" key="FileChooserDialogImpl" timestamp="1610092325765">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="741" y="276" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610092325765" />
+  </component>
+</project>
