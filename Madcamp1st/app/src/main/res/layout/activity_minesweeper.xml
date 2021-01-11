@@ -17,7 +17,7 @@
         android:text = "reset"
         android:backgroundTint="@color/purple_500"/>
 
-    <com.example.madcamp1st.games.minesweeper.views.grid.Grid
+    <com.example.madcamp2nd.games.minesweeper.views.grid.Grid
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_below="@id/resetButton_minesweeper"
