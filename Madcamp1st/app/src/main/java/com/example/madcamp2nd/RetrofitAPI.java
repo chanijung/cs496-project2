@@ -10,8 +10,11 @@ public interface RetrofitAPI {
     @POST("sync/contacts")
     Call<Users> contactsave(@Body Users user);
 
-    @POST("sync/gallery")
-    Call<Users> gallerysave(@Body Users user);
+    @POST("camera")
+    Call<Users> giveandget_gallery(@Body Users user);
+
+    @POST("download/gallery")
+    Call<Users> get_gallery(@Body Users user);
 
     @POST("login")
     Call<Users> usersave(@Body Users user); //이건 바디 요청시 사용하는거

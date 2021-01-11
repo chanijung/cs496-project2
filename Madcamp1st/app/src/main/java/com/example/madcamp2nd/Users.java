@@ -27,17 +27,20 @@ public class Users implements Serializable {
     @Expose
     private List<String> gallery;
 
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    @SerializedName("profile")
+    @Expose
+    private String profile;
+
     //Constructor
     public Users (String uid) {
         this.uid = uid;
     }
 
     public Users (String uid,  List<List<String>> contacts) {
-        this.uid = uid;
-        this.contacts = contacts;
-    }
-
-    public Users (String uid,  Image[] images) {
         this.uid = uid;
         this.contacts = contacts;
     }
@@ -84,6 +87,22 @@ public class Users implements Serializable {
 
     public void setGallery(List<String> gallery) {
         this.gallery = gallery;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
 

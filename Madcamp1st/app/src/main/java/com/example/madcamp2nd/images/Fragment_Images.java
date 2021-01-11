@@ -46,6 +46,7 @@ import com.example.madcamp2nd.RetrofitAPI;
 import com.example.madcamp2nd.RetrofitClient;
 import com.example.madcamp2nd.Users;
 import com.example.madcamp2nd.contacts.Contact;
+import com.google.android.gms.common.util.IOUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -96,12 +97,13 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
 
     // Retrofit
     RetrofitAPI apiInterface;
-    Image[] phone_images;
+    List<String> phone_images;
     Image[] db_images;
 
     Bitmap temp_bitmap;
 
     ByteArrayOutputStream outStream;
+    ByteArrayInputStream instream;
     byte[] image;
     String profileImageBase64;
 
@@ -130,28 +132,23 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         // db에 접근해서 갤러리 가져옴
-//        apiInterface = RetrofitClient.getApiService();
-//        Log.e("tag", "In fragment_contacts"+user.getUid());
-//        user.setUid("uid1");
-//        call = apiInterface.usersave(user);
-//        call.enqueue(new Callback<Users>() {
-//            @Override
-//            public void onResponse(Call<Users> call, Response<Users> response) {
-//                Log.e("ta", "dddd contact ok");
-//                Log.e("ta", "dddd " + response.body().getUid());
-//                db_contacts = response.body().getContacts();
-//
-//            }
-//            @Override
-//            public void onFailure(Call<Users> call, Throwable t) {
-//                Log.e("ta", "dddd contact fail");
-//            }
-//        });
+        apiInterface = RetrofitClient.getApiService();
+        call = apiInterface.get_gallery(user);
+        Log.e("Fragment_Images", "call");
+        call.enqueue(new Callback<Users>() {
+            @Override
+            public void onResponse(Call<Users> call, Response<Users> response) {
+                Log.e("Fragment_Images", "get response");
+                Log.e("Fragment_gallery", "dddd db get ok");
+                temp_gallery = response.body().getGallery();
+                showImage(temp_gallery);
+            }
+            @Override
+            public void onFailure(Call<Users> call, Throwable t) {
+                Log.e("Fragment_gallery", "dddd db get fail");
+            }
+        });
 
-        temp_gallery = user.getGallery();
-//temp_gallery -> db_images
-
-//        showImage(db_images);
         fab_images.setOnClickListener(this);
         fab_synchronization.setOnClickListener(this);
         fab_camera.setOnClickListener(this);
@@ -224,29 +221,30 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
 //
 
 //                if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-                    Log.e("Fragment_Images", "get Images");// 동기화 작업, db에서 받고, 띄워줘야함.
-                    apiInterface = RetrofitClient.getApiService();
+                Log.e("Fragment_Images", "get Images");// 동기화 작업, db에서 받고, 띄워줘야함.
+                apiInterface = RetrofitClient.getApiService();
+                try {
                     phone_images = loadImage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                    user = new Users(user.getUid(), phone_images);
-                    call = apiInterface.contactsave(user);
-                    call.enqueue(new Callback<Users>() {
-                        @Override
-                        public void onResponse(Call<Users> call, Response<Users> response) {
-                            Log.d("Fragment_Images", "dddd login ok");
-                            Log.d("Fragment_Images", "dddd " + response.body().getUid());
-                            temp_gallery = response.body().getGallery();
-                            // db_images
-                        }
+                user.setGallery(phone_images);
+                call = apiInterface. giveandget_gallery(user);
+                call.enqueue(new Callback<Users>() {
+                    @Override
+                    public void onResponse(Call<Users> call, Response<Users> response) {
+                        Log.e("Fragment_Images", "dddd sync ok");
+                        temp_gallery = response.body().getGallery();
+                        showImage(temp_gallery);
+                        // db_images
+                    }
 
-                        @Override
-                        public void onFailure(Call<Users> call, Throwable t) {
-                            Log.d("Fragment_Images", "dddd login fail");
-                        }
-                    });
-//                    showImage(db_images);
-//
-//                }
+                    @Override
+                    public void onFailure(Call<Users> call, Throwable t) {
+                        Log.e("Fragment_Images", "dddd sync fail");
+                    }
+                });
 
                 toggleFab();
 
@@ -293,7 +291,7 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
         }
     }
 
-    private Image[] loadImage() {
+    private List<String> loadImage() throws IOException {
         ProgressDialog pd;
         ArrayList<Image> images = new ArrayList<Image>();
 
@@ -321,10 +319,26 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
         c.close();
         pd.cancel();
 
-        return images.toArray(new Image[0]);
+        byte[] target;
+        Image[] temp_image = images.toArray(new Image[0]);
+        List<String> load_gallery = new ArrayList<>();
+        for (int x = 0; x < temp_image.length; x++) {
+            Log.e("loadimage tag", temp_image[x].uri.toString());
+            InputStream is = getContext().getContentResolver().openInputStream(temp_image[x].uri);
+            temp_bitmap = BitmapFactory.decodeStream(is);
+            outStream = new ByteArrayOutputStream();
+//            rotate(bitmap, exifDegree).compress(Bitmap.CompressFormat.PNG, 70, fOut);
+            temp_bitmap.compress(Bitmap.CompressFormat.PNG, 70, outStream);
+            image = outStream.toByteArray();
+
+            profileImageBase64 = Base64.encodeToString(image,0);
+            load_gallery.add(profileImageBase64);
+        }
+
+        return load_gallery;
     }
 
-    private void showImage(Image[] images) {
+    private void showImage(List<String> images) {
 
         RecyclerView recyclerView = mView.findViewById(R.id.recyclerView_images);
 
@@ -338,7 +352,7 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
 
 
 
-    void zoomImageFromThumb(final View thumbView, Uri uri) {
+    void zoomImageFromThumb(final View thumbView, Bitmap bm) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
         if (currentAnimator != null) {
@@ -349,12 +363,7 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
         final ImageView expandedImageView = mView.findViewById(
                 R.id.imageView_expanded);
 
-        try {
-            InputStream is = getContext().getContentResolver().openInputStream(uri);
-            expandedImageView.setImageDrawable(Drawable.createFromStream(is, uri.toString()));
-        } catch (FileNotFoundException e) {
-            expandedImageView.setImageResource(R.drawable.sorry2);
-        }
+        expandedImageView.setImageBitmap(bm);
 
         // Calculate the starting and ending bounds for the zoomed-in image.
         // This step involves lots of math. Yay, math.
@@ -556,26 +565,27 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
             temp_gallery.add(profileImageBase64);
             user.setGallery(temp_gallery);
             apiInterface = RetrofitClient.getApiService();
-            call = apiInterface.gallerysave(user);
+            call = apiInterface. giveandget_gallery(user);
             Log.e("Fragment_Images", "call");
             call.enqueue(new Callback<Users>() {
                 @Override
                 public void onResponse(Call<Users> call, Response<Users> response) {
                     Log.e("Fragment_Images", "get response");
                     temp_gallery = response.body().getGallery();
-                    String data = temp_gallery.get(0);
-                    byte[] bytePlainOrg = Base64.decode(data, 0);
-                    Log.e("Fragment_Images", "with bytearrayinputstream");
-                    ByteArrayInputStream instream =  new ByteArrayInputStream(bytePlainOrg);
-                    Bitmap bm = BitmapFactory.decodeStream(instream);
-                    ImageView ivimage = (ImageView) getActivity().findViewById(R.id.imageView2);
-                    ivimage.setImageBitmap(bm);
-                    ivimage.setVisibility(View.VISIBLE);
+                    showImage(temp_gallery);
+//                    String data = temp_gallery.get(0);
+//                    byte[] bytePlainOrg = Base64.decode(data, 0);
+//                    Log.e("Fragment_Images", "with bytearrayinputstream");
+//                    ByteArrayInputStream instream =  new ByteArrayInputStream(bytePlainOrg);
+//                    Bitmap bm = BitmapFactory.decodeStream(instream);
+//                    ImageView ivimage = (ImageView) getActivity().findViewById(R.id.imageView2);
+//                    ivimage.setImageBitmap(bm);
+//                    ivimage.setVisibility(View.VISIBLE);
 
                 }
                 @Override
                 public void onFailure(Call<Users> call, Throwable t) {
-                    Log.e("Fragment_gallery", "dddd login fail");
+                    Log.e("Fragment_gallery", "dddd camera fail");
                 }
             });
 

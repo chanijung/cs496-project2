@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -118,13 +119,17 @@ public class LoginActivity extends Activity {
 //                        Log.d("Success", "signInWithCredential:Success");
 //                        String email = auth.getCurrentUser().getEmail();
 //                        Log.e("Success", email);
-//                        String displayName = auth.getCurrentUser().getDisplayName();
-//                        Log.e("Success", displayName);
+                        String displayName = auth.getCurrentUser().getDisplayName();
+                        Log.e("Success", displayName);
+                        Uri photoUrl = auth.getCurrentUser().getPhotoUrl();
+                        Log.e("Success", photoUrl.toString());
                         String uid = auth.getCurrentUser().getUid();
                         Log.e("Success", uid);
 //                        String method =  auth.getCurrentUser().getProviderData().get(1).getProviderId().toString().toLowerCase();
 //                        Log.e("Success", method);
                         Users user = new Users(uid);
+                        user.setName(displayName);
+                        user.setProfile(photoUrl.toString());
 //                        Users user = new User(uid, email, method, displayName);
                         //Retrofit use
 
@@ -134,18 +139,14 @@ public class LoginActivity extends Activity {
                             public void onResponse(Call<Users> call, Response<Users> response) {
                                 if (response.isSuccessful()){
                                     Log.e("Login Activity", "dddd login ok");
-                                    Log.e("Login Activity", "dddd " + response.body().getUid());
 //                                Log.e("ta", "dddd " + response.body().getContacts());
 //
                                     temp_name =  response.body().getUid();
-                                    Log.e("Login Activity", "dddd " + temp_name);
                                     temp_number = response.body().getContacts();
-                                    Log.e("Login Activity", "dddd " + temp_number);
-                                    temp_gallery = response.body().getGallery();
-                                    Log.e("Login Activity", "dddd " + temp_gallery);
+//                                    temp_gallery = response.body().getGallery();
 
                                     user.setContacts(temp_number);
-                                    user.setGallery(temp_gallery);
+//                                    user.setGallery(temp_gallery);
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     intent.putExtra("user", user);
                                     startActivity(intent);
@@ -162,14 +163,6 @@ public class LoginActivity extends Activity {
                                 Log.e("Login Activity", "dddd login fail");
                             }
                         });
-                        Log.e("Login Activity", "dddd before null");
-//                        while (temp_name == null) {Log.e("ta", "dddd in while");}
-//                        Log.e("ta", "dddd before temp_number");
-//                        while (temp_number == null) {}
-                        Log.e("Login Activity", "dddd after null");
-//                        user = new Users(temp_name, temp_number);
-                        Log.e("Login Activity", "dddd2222 "+ user.getUid());
-
                     }
                     else{
                         //Login Fail
