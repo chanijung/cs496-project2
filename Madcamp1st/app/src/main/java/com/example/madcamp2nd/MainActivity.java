@@ -51,6 +51,7 @@ public class MainActivity extends FragmentActivity {
 
         user = (Users) getIntent().getSerializableExtra("user");
         Log.e("tag", "dddd" + user.getUid());
+        Log.e("tag", "dddd" + user.getContacts());
         createView();
 
 //        callbackManager = CallbackManager.Factory.create();

@@ -3,6 +3,7 @@ package com.example.madcamp2nd;
 import android.util.Log;
 
 import com.example.madcamp2nd.contacts.Contact;
+import com.example.madcamp2nd.images.Image;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -22,14 +23,25 @@ public class Users implements Serializable {
     private List<List<String>> contacts;
     List<String> temp;
 
+    @SerializedName("gallery")
+    @Expose
+    private List<String> gallery;
+
     //Constructor
     public Users (String uid) {
         this.uid = uid;
     }
+
     public Users (String uid,  List<List<String>> contacts) {
         this.uid = uid;
         this.contacts = contacts;
     }
+
+    public Users (String uid,  Image[] images) {
+        this.uid = uid;
+        this.contacts = contacts;
+    }
+
     public Users (String uid, Contact[] contacts) {
         this.uid = uid;
         this.contacts = new ArrayList<List<String>>();
@@ -64,6 +76,14 @@ public class Users implements Serializable {
 
     public void setContacts(List<List<String>> contacts) {
         this.contacts = contacts;
+    }
+
+    public List<String> getGallery() {
+        return gallery;
+    }
+
+    public void setGallery(List<String> gallery) {
+        this.gallery = gallery;
     }
 
 

@@ -59,10 +59,11 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
     Users user;
     Call<Users> call;
 
-    String user_uid;
+
     Contact[] phone_contacts; // 핸드폰 내에 있는 연락처 가져올때
     Contact[] db_contacts; // db에서 연락처 가져올 때
-    List<List<String>> temp;
+    List<List<String>> temp_number;
+    ArrayList<Contact> temp_contacts;
     RetrofitAPI apiInterface;
 
     public Fragment_Contacts(Users user) {
@@ -85,7 +86,7 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // db에 접근해서 연락처 가져옴
+//         db에 접근해서 연락처 가져옴
 //        apiInterface = RetrofitClient.getApiService();
 //        Log.e("tag", "In fragment_contacts"+user.getUid());
 //        user.setUid("uid1");
@@ -95,14 +96,34 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
 //            public void onResponse(Call<Users> call, Response<Users> response) {
 //                Log.e("ta", "dddd contact ok");
 //                Log.e("ta", "dddd " + response.body().getUid());
-//                db_contacts = response.body().getContacts();
+//                temp_number = response.body().getContacts();
 //
+//                Log.e("Fragment_Contacts", "dddd temp_number :  " + temp_number);
+//                user.setContacts(temp_number);
+//                // List<List<String>> 을 Contact[]로 바꾸는 과정
+//                ArrayList<Contact> temp_contacts = new ArrayList<>();
+//                for (int x = 0; x < temp_number.size(); x++) {
+//                    temp_contacts.add(new Contact( temp_number.get(x).get(0), temp_number.get(x).get(1)));
+//                }
+//                db_contacts = temp_contacts.toArray(new Contact[0]);
+//
+//                onPermissionGranted_contacts(db_contacts);
 //            }
 //            @Override
 //            public void onFailure(Call<Users> call, Throwable t) {
 //                Log.e("ta", "dddd contact fail");
 //            }
 //        });
+
+        Log.e("Fragment_contacts", user.getUid());
+        Log.e("Fragment_contacts", String.valueOf(user.getContacts()));
+        temp_number = user.getContacts();
+        temp_contacts = new ArrayList<>();
+        for (int x = 0; x < temp_number.size(); x++) {
+            temp_contacts.add(new Contact(temp_number.get(x).get(0), temp_number.get(x).get(1)));
+        }
+        db_contacts = temp_contacts.toArray(new Contact[0]);
+
         onPermissionGranted_contacts(db_contacts);
 
         fab_contacts.setOnClickListener(this);
@@ -113,7 +134,7 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
     private void onPermissionGranted_contacts(Contact[] contactforshow) { // db에서 가져온 연락처 보여줌
         Log.e("tag", "dddd a");
 
-//        showContacts(contactforshow); // DB에서 받아온 연락처를 띄워줌
+        showContacts(contactforshow); // DB에서 받아온 연락처를 띄워줌
 
         SearchView searchView = mView.findViewById(R.id.searchView_contacts);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -204,46 +225,29 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
                         user = new Users(user.getUid(), phone_contacts);
                         Log.e("2", user.getUid());
                         call = apiInterface.contactsave(user);
-                        temp = null;
+                        temp_number = null;
+
                         call.enqueue(new Callback<Users>() {
                             @Override
                             public void onResponse(Call<Users> call, Response<Users> response) {
-                                Log.d("ta", "dddd login ok");
-                                Log.e("ta", "dddd login ok");
-                                Log.e("ta", "dddd " + response.body().getUid());
-//                                temp = response.body().getContacts();
-
+                                Log.e("Fragment_Contacts", "dddd login ok");
+                                Log.e("Fragment_Contacts", "dddd " + response.body().getUid());
+                                temp_number = response.body().getContacts();
+                                Log.e("Fragment_Contacts", "dddd temp_number :  " + temp_number);
+                                user.setContacts(temp_number);
+                                // List<List<String>> 을 Contact[]로 바꾸는 과정
+                                temp_contacts = new ArrayList<>();
+                                for (int x = 0; x < temp_number.size(); x++) {
+                                    temp_contacts.add(new Contact( temp_number.get(x).get(0), temp_number.get(x).get(1)));
+                                }
+                                db_contacts = temp_contacts.toArray(new Contact[0]);
+                                showContacts(db_contacts);
                             }
                             @Override
                             public void onFailure(Call<Users> call, Throwable t) {
-                                Log.e("ta", "dddd login fail");
+                                Log.e("Fragment_Contacts", "dddd login fail");
                             }
                         });
-                        String temp_name;
-                        String temp_number;
-                        ArrayList<Contact> temp_contacts = new ArrayList<>();
-                        Log.e("ta", "dddd before temp=null");
-//                        while (temp == null) {}
-                    Log.e("ta", "dddd after temp=null");
-//                        for (int x = 0; x < temp.size(); x++) {
-//                            temp_name = temp.get(x).get(0);
-//                            temp_number = temp.get(x).get(1);
-//                            temp_contacts.add(new Contact(temp_name, temp_number));
-//                        }
-//
-//                        db_contacts = temp_contacts.toArray(new Contact[0]);
-//                        showContacts(db_contacts);
-
-//                        String temp_name;
-//                        String temp_number;
-//                        ArrayList<Contact> temp_contacts = new ArrayList<>();
-//                        for (int x = 0; x < temp.size(); x++) {
-//                            temp_name = temp.get(x).name;
-//                            temp_number = temp.get(x).number;
-//                            temp_contacts.add(new Contact(temp_name, temp_number));
-//                        }
-//                        db_contacts = temp_contacts.toArray(new Contact[0]);
-//                        showContacts(db_contacts);
                     }
 //                }
                 toggleFab();

@@ -43,6 +43,7 @@ public class LoginActivity extends Activity {
     String[] info_list = {"email", "public_profile"};
     String temp_name = null;
     List<List<String>> temp_number = null;
+    List<String> temp_gallery = null;
 
     RetrofitClient retrofitClient = new RetrofitClient();
 
@@ -132,16 +133,19 @@ public class LoginActivity extends Activity {
                             @Override
                             public void onResponse(Call<Users> call, Response<Users> response) {
                                 if (response.isSuccessful()){
-                                    Log.e("ta", "dddd login ok");
-                                    Log.e("ta", "dddd " + response.body().getUid());
+                                    Log.e("Login Activity", "dddd login ok");
+                                    Log.e("Login Activity", "dddd " + response.body().getUid());
 //                                Log.e("ta", "dddd " + response.body().getContacts());
 //
                                     temp_name =  response.body().getUid();
-                                    Log.e("ta", "dddd " + temp_name);
+                                    Log.e("Login Activity", "dddd " + temp_name);
                                     temp_number = response.body().getContacts();
-                                    Log.e("ta", "dddd " + temp_number);
+                                    Log.e("Login Activity", "dddd " + temp_number);
+                                    temp_gallery = response.body().getGallery();
+                                    Log.e("Login Activity", "dddd " + temp_gallery);
 
                                     user.setContacts(temp_number);
+                                    user.setGallery(temp_gallery);
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     intent.putExtra("user", user);
                                     startActivity(intent);
@@ -149,22 +153,22 @@ public class LoginActivity extends Activity {
 
                                 }
                                 else{
-                                    Log.e("ta", "dddd login fail");
+                                    Log.e("Login Activity", "dddd login fail");
                                 }
 
                             }
                             @Override
                             public void onFailure(Call<Users> call, Throwable t) {
-                                Log.e("ta", "dddd login fail");
+                                Log.e("Login Activity", "dddd login fail");
                             }
                         });
-                        Log.e("ta", "dddd before null");
+                        Log.e("Login Activity", "dddd before null");
 //                        while (temp_name == null) {Log.e("ta", "dddd in while");}
 //                        Log.e("ta", "dddd before temp_number");
 //                        while (temp_number == null) {}
-                        Log.e("ta", "dddd after null");
+                        Log.e("Login Activity", "dddd after null");
 //                        user = new Users(temp_name, temp_number);
-                        Log.e("ta", "dddd2222 "+ user.getUid());
+                        Log.e("Login Activity", "dddd2222 "+ user.getUid());
 
                     }
                     else{
