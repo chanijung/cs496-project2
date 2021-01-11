@@ -21,6 +21,8 @@ public class Users implements Serializable {
     @Expose
     private List<List<String>> contacts;
     List<String> temp;
+
+    //Constructor
     public Users (String uid) {
         this.uid = uid;
     }

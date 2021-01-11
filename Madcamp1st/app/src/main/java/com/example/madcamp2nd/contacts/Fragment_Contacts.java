@@ -211,7 +211,7 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
                                 Log.d("ta", "dddd login ok");
                                 Log.e("ta", "dddd login ok");
                                 Log.e("ta", "dddd " + response.body().getUid());
-                                temp = response.body().getContacts();
+//                                temp = response.body().getContacts();
 
                             }
                             @Override
@@ -225,14 +225,14 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
                         Log.e("ta", "dddd before temp=null");
 //                        while (temp == null) {}
                     Log.e("ta", "dddd after temp=null");
-                        for (int x = 0; x < temp.size(); x++) {
-                            temp_name = temp.get(x).get(0);
-                            temp_number = temp.get(x).get(1);
-                            temp_contacts.add(new Contact(temp_name, temp_number));
-                        }
-
-                        db_contacts = temp_contacts.toArray(new Contact[0]);
-                        showContacts(db_contacts);
+//                        for (int x = 0; x < temp.size(); x++) {
+//                            temp_name = temp.get(x).get(0);
+//                            temp_number = temp.get(x).get(1);
+//                            temp_contacts.add(new Contact(temp_name, temp_number));
+//                        }
+//
+//                        db_contacts = temp_contacts.toArray(new Contact[0]);
+//                        showContacts(db_contacts);
 
 //                        String temp_name;
 //                        String temp_number;

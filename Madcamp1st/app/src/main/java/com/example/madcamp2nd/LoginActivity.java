@@ -131,14 +131,27 @@ public class LoginActivity extends Activity {
                         call.enqueue(new Callback<Users>() {
                             @Override
                             public void onResponse(Call<Users> call, Response<Users> response) {
-                                Log.e("ta", "dddd login ok");
-                                Log.e("ta", "dddd " + response.body().getUid());
+                                if (response.isSuccessful()){
+                                    Log.e("ta", "dddd login ok");
+                                    Log.e("ta", "dddd " + response.body().getUid());
 //                                Log.e("ta", "dddd " + response.body().getContacts());
 //
-                                temp_name =  response.body().getUid();
-                                Log.e("ta", "dddd " + temp_name);
-                                temp_number = response.body().getContacts();
-                                Log.e("ta", "dddd " + temp_number);
+                                    temp_name =  response.body().getUid();
+                                    Log.e("ta", "dddd " + temp_name);
+                                    temp_number = response.body().getContacts();
+                                    Log.e("ta", "dddd " + temp_number);
+
+                                    user.setContacts(temp_number);
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent.putExtra("user", user);
+                                    startActivity(intent);
+                                    finish();
+
+                                }
+                                else{
+                                    Log.e("ta", "dddd login fail");
+                                }
+
                             }
                             @Override
                             public void onFailure(Call<Users> call, Throwable t) {
@@ -150,13 +163,9 @@ public class LoginActivity extends Activity {
 //                        Log.e("ta", "dddd before temp_number");
 //                        while (temp_number == null) {}
                         Log.e("ta", "dddd after null");
-                        user = new Users(temp_name, temp_number);
+//                        user = new Users(temp_name, temp_number);
                         Log.e("ta", "dddd2222 "+ user.getUid());
-                        user.setContacts(temp_number);
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("user", user);
-                        startActivity(intent);
-                        finish();
+
                     }
                     else{
                         //Login Fail
