@@ -6,24 +6,46 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.listener.multi.BaseMultiplePermissionsListener;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class Fragment4 extends Fragment {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class Fragment4 extends Fragment implements View.OnClickListener {
 
     private ListView listView;
     public static ArrayList<MusicDto> list;
 
     Users user;
+
+    // Fab 버튼 사용할 때 필요한 변수들
+    private Animation fab_open, fab_close;
+    private boolean isFabOpen = false;
+    FloatingActionButton fab_music,fab_addfriend, fab_RFF;
+
+
     public Fragment4() {
 
         // Required empty public constructor
@@ -46,6 +68,7 @@ public class Fragment4 extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -53,6 +76,13 @@ public class Fragment4 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_4, container, false);
+
+        fab_open = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_close);
+        fab_music = view.findViewById(R.id.floatingActionButton_music);
+        fab_addfriend = view.findViewById(R.id.floatingActionButton_addfriend);
+        fab_RFF = view.findViewById(R.id.floatingActionButton_RecFromFriend);
+
 
         getMusicList(); // 디바이스 안에 있는 mp3 파일 리스트를 조회하여 LIst를 만듭니다.
         listView = (ListView) view.findViewById(R.id.listview);
@@ -66,6 +96,7 @@ public class Fragment4 extends Fragment {
                 Intent intent = new Intent(getActivity(), MusicActivity.class);
                 intent.putExtra("position", position);
                 intent.putExtra("playlist", list);
+                intent.putExtra("user",user);
                 System.out.println("before starting activity");
                 startActivity(intent);
                 System.out.println("after starting activity");
@@ -74,7 +105,14 @@ public class Fragment4 extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        fab_music.setOnClickListener(this);
+        fab_addfriend.setOnClickListener(this);
+        fab_RFF.setOnClickListener(this);
+    }
     public void getMusicList() {
         list = new ArrayList<>();
         //가져오고 싶은 컬럼 명을 나열합니다. 음악의 아이디, 앰블럼 아이디, 제목, 아티스트 정보를 가져옵니다.
@@ -106,6 +144,48 @@ public class Fragment4 extends Fragment {
             System.out.println(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
         }
         cursor.close();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.floatingActionButton_music: // Fab 버튼 닫기, 열기
+                Log.e("Fragment_music", "touch");
+                toggleFab();
+                // 동기화 작업, db에서 받고, 띄워줘야함.
+                break;
+            case R.id.floatingActionButton_addfriend: // friendmaker 액티비티 실행
+                Log.e("Fragment_music", "addfr");
+                toggleFab();
+                Intent intent = new Intent(getActivity().getApplicationContext(), FriendMaker.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+
+                break;
+            case R.id.floatingActionButton_RecFromFriend:
+                Log.e("Fragment_music", "RFF");
+                toggleFab();
+        }
+    }
+
+    private void toggleFab() {
+        Log.e("Fragment_Images", "toggleFab");
+        if (isFabOpen) {
+            fab_music.setImageResource(R.drawable.icon_plus);
+            fab_addfriend.startAnimation(fab_close);
+            fab_addfriend.setClickable(false);
+            fab_RFF.startAnimation(fab_close);
+            fab_RFF.setClickable(false);
+            isFabOpen = false;
+        } else {
+            fab_music.setImageResource(R.drawable.icon_x);
+            fab_addfriend.startAnimation(fab_open);
+            fab_addfriend.setClickable(true);
+            fab_RFF.startAnimation(fab_open);
+            fab_RFF.setClickable(true);
+            isFabOpen = true;
+        }
     }
 }
 

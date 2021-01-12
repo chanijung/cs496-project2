@@ -6,6 +6,11 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface RetrofitAPI {
+    @POST("make/friend")
+    Call<Users> makefriend(@Body Users user);
+
+    @POST("find/friend")
+    Call<Users> findfriend(@Body Users user);
 
     @POST("sync/contacts")
     Call<Users> contactsave(@Body Users user);

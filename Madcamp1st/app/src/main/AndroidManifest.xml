@@ -39,6 +39,11 @@
             android:label="Music Player">
         </activity>
 
+        <activity
+            android:name=".FriendMaker"
+            android:label="Music Player">
+        </activity>
+
         <provider
             android:authorities="com.example.madcamp2nd"
             android:name="androidx.core.content.FileProvider"

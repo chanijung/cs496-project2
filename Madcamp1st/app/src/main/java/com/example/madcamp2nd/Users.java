@@ -35,12 +35,26 @@ public class Users implements Serializable {
     @Expose
     private String profile;
 
+    @SerializedName("profiles")
+    @Expose
+    private List<String> profiles;
+
+    @SerializedName("relation")
+    @Expose
+    private List<String> relation;
+
+    @SerializedName("myfriends")
+    @Expose
+    private List<String> myfriends;
+
     //Constructor
-    public Users (String uid) {
+    public Users(){
+    }
+    public Users(String uid) {
         this.uid = uid;
     }
 
-    public Users (String uid,  List<List<String>> contacts) {
+    public Users(String uid, List<List<String>> contacts) {
         this.uid = uid;
         this.contacts = contacts;
     }
@@ -48,7 +62,6 @@ public class Users implements Serializable {
     public Users (String uid, Contact[] contacts) {
         this.uid = uid;
         this.contacts = new ArrayList<List<String>>();
-
         for (int x = 0; x < contacts.length; x++) {
             temp = new ArrayList<String>();
             temp.add(contacts[x].name);
@@ -64,6 +77,7 @@ public class Users implements Serializable {
 //            this.contact.add(temp);
 //        }
     }
+
 
     public String getUid() {
         return uid;
@@ -105,6 +119,29 @@ public class Users implements Serializable {
         this.profile = profile;
     }
 
+    public List<String> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(List<String> profiles) {
+        this.profiles = profiles;
+    }
+
+    public List<String> getRelation() {
+        return relation;
+    }
+
+    public void setRelation(List<String> relation) {
+        this.relation = relation;
+    }
+
+    public List<String> getMyfriends() {
+        return myfriends;
+    }
+
+    public void setMyfriends(List<String> myfriends) {
+        this.myfriends = myfriends;
+    }
 
 //    public boolean isRight() {
 //        return isRight;

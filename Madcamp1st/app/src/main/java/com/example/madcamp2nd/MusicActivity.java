@@ -18,20 +18,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
-
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class MusicActivity extends AppCompatActivity implements View.OnClickListener {
-
     private ArrayList<MusicDto> list;
     private MediaPlayer mediaPlayer;
     private TextView title;
@@ -46,7 +43,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
     private ListView friends_list;
     Context context;
     List<String> friends_string_list = new ArrayList<>();;
-
+    private String uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         context = this;
@@ -60,28 +57,52 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         artist = (TextView)findViewById(R.id.artist);
         album = (ImageView)findViewById(R.id.album);
         seekBar = (SeekBar)findViewById(R.id.seekbar);
-
         position = intent.getIntExtra("position",0);
         list = (ArrayList<MusicDto>) intent.getSerializableExtra("playlist");
         res = getContentResolver();
-
         previous = (ImageView)findViewById(R.id.pre);
         play = (ImageView)findViewById(R.id.play);
         pause = (ImageView)findViewById(R.id.pause);
         next = (ImageView)findViewById(R.id.next);
-
         previous.setOnClickListener(this);
         play.setOnClickListener(this);
         pause.setOnClickListener(this);
         next.setOnClickListener(this);
-
-        friends_string_list.add("Chani Jung");
-
+//        friends_string_list.add("Chani Jung");
+        uid = intent.getStringExtra("uid");
+        Users user = new Users(uid);
+        Call<Users> call = RetrofitClient.getApiService().usersave(user);
+        call.enqueue(new Callback<Users>() {
+            @Override
+            public void onResponse(Call<Users> call, Response<Users> response) {
+                if (response.isSuccessful()){
+                    Log.e("Music Activity", "on response");
+//                                Log.e("ta", "dddd " + response.body().getContacts());
+//
+//                    temp_name =  response.body().getUid();
+//                    temp_number = response.body().getContacts();
+////                                    temp_gallery = response.body().getGallery();
+//
+//                    user.setContacts(temp_number);
+////                                    user.setGallery(temp_gallery);
+//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                    intent.putExtra("user", user);
+//                    startActivity(intent);
+//                    finish();
+                }
+                else{
+//                    Log.e("Login Activity", "dddd login fail");
+                }
+            }
+            @Override
+            public void onFailure(Call<Users> call, Throwable t) {
+//                Log.e("Login Activity", "dddd login fail");
+            }
+        });
         friends_list = (ListView) findViewById(R.id.friends_list);
         TextView friends_header = new TextView(context);
         friends_header.setText("누구에게 추천할까요?");
         friends_list.addHeaderView(friends_header);
-
         recomm = (ImageButton)findViewById(R.id.recommendation);
         System.out.println("before setonclicklistener");
         recomm.setOnClickListener(new View.OnClickListener() {
@@ -95,16 +116,16 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
                     friends_list.setVisibility(View.VISIBLE);
                     FriendsListAdapter adapter = new FriendsListAdapter((Activity) context, friends_string_list);
                     friends_list.setAdapter(adapter);
-    //                friends_list.setOnClickListener(new AdapterView.OnItemClickListener(){
-    //                    @Override
-    //                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    //                        Intent intent = new Intent(this, RecommendActivity.class);
-    //                        intent.putExtra("position", position);
-    //                        System.out.println("before starting activity");
-    //                        startActivity(intent);
-    //                        System.out.println("after starting activity");
-    //                    }
-    //                });
+                    //                friends_list.setOnClickListener(new AdapterView.OnItemClickListener(){
+                    //                    @Override
+                    //                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    //                        Intent intent = new Intent(this, RecommendActivity.class);
+                    //                        intent.putExtra("position", position);
+                    //                        System.out.println("before starting activity");
+                    //                        startActivity(intent);
+                    //                        System.out.println("after starting activity");
+                    //                    }
+                    //                });
                 }
                 System.out.println("onclick end");
             }
@@ -117,14 +138,11 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 mediaPlayer.pause();
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mediaPlayer.seekTo(seekBar.getProgress());
@@ -133,7 +151,6 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -145,9 +162,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         });
         System.out.println("end of oncreate");
     }
-
     public void playMusic(MusicDto musicDto) {
-
         try {
             seekBar.setProgress(0);
             title.setText(musicDto.getTitle());
@@ -181,7 +196,6 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
             Log.e("SimplePlayer", e.getMessage());
         }
     }
-
     //앨범이 저장되어 있는 경로를 리턴합니다.
     private static String getCoverArtPath(long albumId, Context context) {
         Cursor albumCursor = context.getContentResolver().query(
@@ -199,7 +213,6 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         albumCursor.close();
         return result;
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -230,8 +243,6 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
-
-
     class ProgressUpdate extends Thread{
         @Override
         public void run() {
@@ -244,11 +255,9 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
                 } catch (Exception e) {
                     Log.e("ProgressUpdate",e.getMessage());
                 }
-
             }
         }
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -259,5 +268,3 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 }
-
-
