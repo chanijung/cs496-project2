@@ -101,13 +101,13 @@ public class MainActivity extends FragmentActivity {
             ImageView imgView = new ImageView(this);
             switch (position) {
                 case 0:
-                    imgView.setImageResource(R.drawable.tab_icon_contacts);
+                    imgView.setImageResource(R.drawable.contact);
                     break;
                 case 1:
-                    imgView.setImageResource(R.drawable.tab_icon_images);
+                    imgView.setImageResource(R.drawable.gallery);
                     break;
                 case 2:
-                    imgView.setImageResource(R.drawable.tab_icon_games);
+                    imgView.setImageResource(R.drawable.music);
             }
             imgView.setPadding(10, 10, 10, 10);
             tab.setCustomView(imgView);

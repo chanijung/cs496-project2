@@ -565,7 +565,7 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
             temp_gallery.add(profileImageBase64);
             user.setGallery(temp_gallery);
             apiInterface = RetrofitClient.getApiService();
-            call = apiInterface. giveandget_gallery(user);
+            call = apiInterface.giveandget_gallery(user);
             Log.e("Fragment_Images", "call");
             call.enqueue(new Callback<Users>() {
                 @Override

@@ -34,17 +34,10 @@
 
         </activity>
 
-        <activity android:name="com.example.madcamp2nd.games.snake.SnakeActivity"
-            android:parentActivityName="com.example.madcamp2nd.MainActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name="com.example.madcamp2nd.games.minesweeper.MinesweeperActivity"
-            android:parentActivityName="com.example.madcamp2nd.MainActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name="com.example.madcamp2nd.games.breakout.BreakoutActivity"
-            android:parentActivityName="com.example.madcamp2nd.MainActivity"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".MusicActivity"
+            android:label="Music Player">
+        </activity>
 
         <provider
             android:authorities="com.example.madcamp2nd"
