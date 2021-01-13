@@ -7,6 +7,9 @@ import retrofit2.http.POST;
 
 public interface RetrofitAPI {
     @POST("make/friend")
+    Call<Users> getmessage(@Body Users user);
+
+    @POST("make/friend")
     Call<Users> makefriend(@Body Users user);
 
     @POST("find/friend")

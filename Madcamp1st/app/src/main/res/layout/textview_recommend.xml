@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/recommend_profile"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+    <LinearLayout
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/recommend_profile">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/recommend_friendname"
+            android:text="친구이름">
+        </TextView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/recommend_profile">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativelayout">
+            <TextView
+                android:id="@+id/singer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="가수이름"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/song"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/singer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="노래제목"
+                android:textSize="20dp"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/message_recommend"
+            android:layout_below="@+id/relativelayout"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+
+            android:text="이름"
+            android:textSize="20dp"/>
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

@@ -47,6 +47,10 @@ public class Users implements Serializable {
     @Expose
     private List<String> myfriends;
 
+    @SerializedName("recommend")
+    @Expose
+    private List<List<String>> recommend;
+
     //Constructor
     public Users(){
     }
@@ -141,6 +145,14 @@ public class Users implements Serializable {
 
     public void setMyfriends(List<String> myfriends) {
         this.myfriends = myfriends;
+    }
+
+    public List<List<String>> getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(List<List<String>> recommend) {
+        this.recommend = recommend;
     }
 
 //    public boolean isRight() {

@@ -39,6 +39,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener {
     public static ArrayList<MusicDto> list;
 
     Users user;
+    Intent intent;
 
     // Fab 버튼 사용할 때 필요한 변수들
     private Animation fab_open, fab_close;
@@ -158,7 +159,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener {
             case R.id.floatingActionButton_addfriend: // friendmaker 액티비티 실행
                 Log.e("Fragment_music", "addfr");
                 toggleFab();
-                Intent intent = new Intent(getActivity().getApplicationContext(), FriendMaker.class);
+                intent = new Intent(getActivity().getApplicationContext(), FriendMaker.class);
                 intent.putExtra("user", user);
                 startActivity(intent);
 
@@ -166,6 +167,10 @@ public class Fragment4 extends Fragment implements View.OnClickListener {
             case R.id.floatingActionButton_RecFromFriend:
                 Log.e("Fragment_music", "RFF");
                 toggleFab();
+                intent = new Intent(getActivity().getApplicationContext(), RecommendList.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+
         }
     }
 

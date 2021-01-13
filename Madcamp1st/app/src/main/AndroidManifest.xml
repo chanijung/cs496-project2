@@ -40,6 +40,11 @@
         </activity>
 
         <activity
+            android:name=".RecommendList"
+            android:label="Music Player">
+        </activity>
+
+        <activity
             android:name=".FriendMaker"
             android:label="Music Player">
         </activity>

@@ -62,11 +62,11 @@ public class LoginActivity extends Activity {
         callbackManager = CallbackManager.Factory.create();
         loginCallback = new LoginCallback();
 
-//        if (auth.getCurrentUser() != null) {
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }
+        if (auth.getCurrentUser() != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         btn_custom_login = (Button) findViewById(R.id.btn_custom_login);
         btn_custom_login.setOnClickListener(new View.OnClickListener() {
