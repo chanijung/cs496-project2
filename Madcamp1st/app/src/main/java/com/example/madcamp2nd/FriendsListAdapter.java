@@ -47,17 +47,13 @@ public class FriendsListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            System.out.println("convertview==null");
             convertView = inflater.inflate(R.layout.friends_listview_item, parent, false);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             convertView.setLayoutParams(layoutParams);
         }
         textView = (TextView) convertView.findViewById(R.id.friend_name);
-        System.out.println("outside if");
         String friendName = list.get(position);
-        System.out.println("got friendname");
         textView.setText(friendName);
-        System.out.println("before returning in getview");
 
         return convertView;
     }

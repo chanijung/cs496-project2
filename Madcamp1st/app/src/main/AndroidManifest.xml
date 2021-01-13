@@ -31,16 +31,10 @@
         </activity>
 
         <activity android:name="com.example.madcamp2nd.MainActivity">
-
         </activity>
 
         <activity
             android:name=".MusicActivity"
-            android:label="Music Player">
-        </activity>
-
-        <activity
-            android:name=".RecommendList"
             android:label="Music Player">
         </activity>
 

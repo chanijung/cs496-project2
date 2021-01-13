@@ -85,14 +85,12 @@ public class FriendSearchAdapter extends BaseAdapter {
                 call.enqueue(new Callback<Users>() {
                     @Override
                     public void onResponse(Call<Users> call, Response<Users> response) {
-                        Log.e( "makefriend", "dddd makefriend ok");
                         if (response.body() != null) {
 
                         }
                     }
                     @Override
                     public void onFailure(Call<Users> call, Throwable t) {
-                        Log.e("makefriend", "dddd makefriend fail");
                     }
                 });
             }

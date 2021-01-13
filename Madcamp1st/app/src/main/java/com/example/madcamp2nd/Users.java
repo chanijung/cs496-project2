@@ -13,7 +13,6 @@ import java.util.List;
 
 public class Users implements Serializable {
 
-//    private boolean isRight = false;
     @SerializedName("uid")
     @Expose
     private String uid;
@@ -72,14 +71,6 @@ public class Users implements Serializable {
             temp.add(contacts[x].number);
             this.contacts.add(temp);
         }
-//        this.contact = new ArrayList<Contact>();
-//        Log.e("tag", "in user");
-//        for (int x = 0; x < contacts.length; x++) {
-//
-//            temp.name = contacts[x].name;
-//            temp.number =contacts[x].number;
-//            this.contact.add(temp);
-//        }
     }
 
 
@@ -155,11 +146,4 @@ public class Users implements Serializable {
         this.recommend = recommend;
     }
 
-//    public boolean isRight() {
-//        return isRight;
-//    }
-//
-//    public void setRight(boolean right) {
-//        isRight = right;
-//    }
 }

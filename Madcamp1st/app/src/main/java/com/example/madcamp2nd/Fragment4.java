@@ -48,7 +48,6 @@ public class Fragment4 extends Fragment implements View.OnClickListener {
 
 
     public Fragment4() {
-
         // Required empty public constructor
     }
 
@@ -59,10 +58,6 @@ public class Fragment4 extends Fragment implements View.OnClickListener {
 
     public static com.example.madcamp2nd.Fragment4 newInstance(String param1, String param2) {
         com.example.madcamp2nd.Fragment4 fragment = new com.example.madcamp2nd.Fragment4();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
         return fragment;
     }
 
@@ -98,9 +93,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener {
                 intent.putExtra("position", position);
                 intent.putExtra("playlist", list);
                 intent.putExtra("user",user);
-                System.out.println("before starting activity");
                 startActivity(intent);
-                System.out.println("after starting activity");
             }
         });
         return view;
@@ -130,10 +123,6 @@ public class Fragment4 extends Fragment implements View.OnClickListener {
 
         Cursor cursor = getActivity().getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 projection, null, null, null);
-        //    Cursor cursor = getActivity().getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-        //            null, null, null, null);
-        //    System.out.println("here");
-        System.out.println("cursor.get_count(): " + cursor.getCount());
         while (cursor.moveToNext()) {
             MusicDto musicDto = new MusicDto();
             musicDto.setId(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
@@ -152,12 +141,10 @@ public class Fragment4 extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.floatingActionButton_music: // Fab 버튼 닫기, 열기
-                Log.e("Fragment_music", "touch");
                 toggleFab();
                 // 동기화 작업, db에서 받고, 띄워줘야함.
                 break;
             case R.id.floatingActionButton_addfriend: // friendmaker 액티비티 실행
-                Log.e("Fragment_music", "addfr");
                 toggleFab();
                 intent = new Intent(getActivity().getApplicationContext(), FriendMaker.class);
                 intent.putExtra("user", user);
@@ -165,17 +152,12 @@ public class Fragment4 extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.floatingActionButton_RecFromFriend:
-                Log.e("Fragment_music", "RFF");
                 toggleFab();
-                intent = new Intent(getActivity().getApplicationContext(), RecommendList.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
 
         }
     }
 
     private void toggleFab() {
-        Log.e("Fragment_Images", "toggleFab");
         if (isFabOpen) {
             fab_music.setImageResource(R.drawable.icon_plus);
             fab_addfriend.startAnimation(fab_close);

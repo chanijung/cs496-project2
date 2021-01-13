@@ -98,8 +98,6 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
     // Retrofit
     RetrofitAPI apiInterface;
     List<String> phone_images;
-    Image[] db_images;
-
     Bitmap temp_bitmap;
 
     ByteArrayOutputStream outStream;
@@ -134,18 +132,14 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
         // db에 접근해서 갤러리 가져옴
         apiInterface = RetrofitClient.getApiService();
         call = apiInterface.get_gallery(user);
-        Log.e("Fragment_Images", "call");
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
-                Log.e("Fragment_Images", "get response");
-                Log.e("Fragment_gallery", "dddd db get ok");
                 temp_gallery = response.body().getGallery();
                 showImage(temp_gallery);
             }
             @Override
             public void onFailure(Call<Users> call, Throwable t) {
-                Log.e("Fragment_gallery", "dddd db get fail");
             }
         });
 
@@ -153,31 +147,6 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
         fab_synchronization.setOnClickListener(this);
         fab_camera.setOnClickListener(this);
     }
-
-//    private void onPermissionGranted_images() {
-//        showImage();
-//        cameraPermission();
-//    }
-
-//    private void cameraPermission() {
-//        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-//                && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
-//            onPermissionGranted_camera(false);
-//        else {
-//            mView.findViewById(R.id.floatingActionButton_camera).setOnClickListener(v -> {
-//                Log.e("tag", "camera permission");
-//                Dexter.withContext(getContext())
-//                        .withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-//                        .withListener(new BaseMultiplePermissionsListener() {
-//                            @Override
-//                            public void onPermissionsChecked(MultiplePermissionsReport report) {
-//                                if (report.areAllPermissionsGranted())
-//                                    onPermissionGranted_camera(true);
-//                            }
-//                        }).check();
-//            });
-//        }
-//    }
 
     private void onPermissionGranted_camera(boolean doAction) {
         // 사진 저장 후 미디어 스캐닝을 돌려줘야 갤러리에 반영됨.
@@ -216,12 +185,6 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
                 // 동기화 작업, db에서 받고, 띄워줘야함.
                 break;
             case R.id.floatingActionButton_synchronization_images: // 동기화 버튼 누르면!
-                Log.e("Fragment_Images", "images");
-//                if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-//
-
-//                if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-                Log.e("Fragment_Images", "get Images");// 동기화 작업, db에서 받고, 띄워줘야함.
                 apiInterface = RetrofitClient.getApiService();
                 try {
                     phone_images = loadImage();
@@ -234,7 +197,6 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
                 call.enqueue(new Callback<Users>() {
                     @Override
                     public void onResponse(Call<Users> call, Response<Users> response) {
-                        Log.e("Fragment_Images", "dddd sync ok");
                         temp_gallery = response.body().getGallery();
                         showImage(temp_gallery);
                         // db_images
@@ -242,7 +204,6 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void onFailure(Call<Users> call, Throwable t) {
-                        Log.e("Fragment_Images", "dddd sync fail");
                     }
                 });
 
@@ -250,7 +211,6 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.floatingActionButton_camera:
-                Log.e("Fragment_Images", "Start Camera");
                 toggleFab();
                 Dexter.withContext(getContext())
                         .withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
@@ -265,8 +225,7 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void toggleFab() {
-        Log.e("Fragment_Images", "toggleFab");
+    private void toggleFab() { // 플로팅 버튼 띄우는데 필요한 함수
         if (isFabOpen) {
             fab_images.setImageResource(R.drawable.icon_plus);
             fab_synchronization.startAnimation(fab_close);
@@ -323,11 +282,9 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
         Image[] temp_image = images.toArray(new Image[0]);
         List<String> load_gallery = new ArrayList<>();
         for (int x = 0; x < temp_image.length; x++) {
-            Log.e("loadimage tag", temp_image[x].uri.toString());
             InputStream is = getContext().getContentResolver().openInputStream(temp_image[x].uri);
             temp_bitmap = BitmapFactory.decodeStream(is);
             outStream = new ByteArrayOutputStream();
-//            rotate(bitmap, exifDegree).compress(Bitmap.CompressFormat.PNG, 70, fOut);
             temp_bitmap.compress(Bitmap.CompressFormat.PNG, 70, outStream);
             image = outStream.toByteArray();
 
@@ -508,7 +465,6 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("Fragment_Images", "OnAcitivty Result");
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath);
             //Bitmap bitmap = ((BitmapDrawable) BitmapFactory.decodeFile(imageFilePath).getDrawable()).getBitmap();
@@ -552,7 +508,6 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
             }
 
             // 비트맵 사진 폴더 경로에 저장
-            Log.e("Fragment_Images", "Finish ready");
             outStream = new ByteArrayOutputStream();
 //            rotate(bitmap, exifDegree).compress(Bitmap.CompressFormat.PNG, 70, fOut);
             rotate(bitmap, exifDegree).compress(Bitmap.CompressFormat.PNG, 70, outStream);
@@ -560,17 +515,13 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
             profileImageBase64 = Base64.encodeToString(image, 0);
 
             // go db
-            Log.e("Fragment_Images", "go db");
-            Log.e("Fragment_Images", user.getUid());
             temp_gallery.add(profileImageBase64);
             user.setGallery(temp_gallery);
             apiInterface = RetrofitClient.getApiService();
             call = apiInterface.giveandget_gallery(user);
-            Log.e("Fragment_Images", "call");
             call.enqueue(new Callback<Users>() {
                 @Override
                 public void onResponse(Call<Users> call, Response<Users> response) {
-                    Log.e("Fragment_Images", "get response");
                     temp_gallery = response.body().getGallery();
                     showImage(temp_gallery);
 //                    String data = temp_gallery.get(0);
@@ -585,7 +536,6 @@ public class Fragment_Images extends Fragment implements View.OnClickListener {
                 }
                 @Override
                 public void onFailure(Call<Users> call, Throwable t) {
-                    Log.e("Fragment_gallery", "dddd camera fail");
                 }
             });
 

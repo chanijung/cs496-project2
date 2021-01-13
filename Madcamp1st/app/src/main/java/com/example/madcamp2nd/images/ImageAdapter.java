@@ -25,7 +25,6 @@ import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private final Fragment_Images fragment_images;
-//    private final Image[] images;
     List<String> temp_gallery;
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
@@ -36,13 +35,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             super(imageView);
 
             imageButton = imageView.findViewById(R.id.imageButton_imagebuttonAndTextview);
-//            name = imageView.findViewById(R.id.textView_imagebuttonAndTextview);
         }
     }
 
     public ImageAdapter(Fragment_Images fragment_images, Image[] images) {
         this.fragment_images = fragment_images;
-//        this.images = images;
     }
 
     public ImageAdapter(Fragment_Images fragment_images, List<String> temp_gallery) {
@@ -62,12 +59,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
-//        Uri uri = images[position].uri;
-//        String name = images[position].name;
 
         String data = temp_gallery.get(position);
         byte[] bytePlainOrg = Base64.decode(data, 0);
-        Log.e("Fragment_Images", "with bytearrayinputstream");
         ByteArrayInputStream instream =  new ByteArrayInputStream(bytePlainOrg);
         Bitmap bm = BitmapFactory.decodeStream(instream);
         holder.imageButton.setImageBitmap(bm);
@@ -78,16 +72,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                 fragment_images.zoomImageFromThumb(holder.imageButton, bm);
             }
         });
-
-
-//        try {
-////            InputStream is = fragment_images.getContext().getContentResolver().openInputStream(uri);
-////            holder.imageButton.setImageDrawable(Drawable.createFromStream(is, uri.toString()));
-//
-////            holder.name.setText(name);
-//        } catch (FileNotFoundException e) {
-//            holder.imageButton.setImageResource(R.drawable.sorry2);
-//        }
     }
 
     @Override

@@ -68,9 +68,8 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         play.setOnClickListener(this);
         pause.setOnClickListener(this);
         next.setOnClickListener(this);
-//        friends_string_list.add("Chani Jung");
-        uid = intent.getStringExtra("uid");
-        Users user = new Users(uid);
+        friends_string_list.add("이우현");
+        Users user = (Users) intent.getSerializableExtra("user");
         Call<Users> call = RetrofitClient.getApiService().usersave(user);
         call.enqueue(new Callback<Users>() {
             @Override

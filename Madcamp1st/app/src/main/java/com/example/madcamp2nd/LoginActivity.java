@@ -41,12 +41,8 @@ import retrofit2.Retrofit;
 public class LoginActivity extends Activity {
 //    private LoginButton btn_Facebook_Login;
     FirebaseAuth auth;
-    String[] info_list = {"email", "public_profile"};
     String temp_name = null;
     List<List<String>> temp_number = null;
-    List<String> temp_gallery = null;
-
-    RetrofitClient retrofitClient = new RetrofitClient();
 
     private Button btn_custom_login;
     private CallbackManager callbackManager;
@@ -62,11 +58,11 @@ public class LoginActivity extends Activity {
         callbackManager = CallbackManager.Factory.create();
         loginCallback = new LoginCallback();
 
-        if (auth.getCurrentUser() != null) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
+//        if (auth.getCurrentUser() != null) {
+//            Intent intent = new Intent(this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
 
         btn_custom_login = (Button) findViewById(R.id.btn_custom_login);
         btn_custom_login.setOnClickListener(new View.OnClickListener() {
@@ -77,10 +73,6 @@ public class LoginActivity extends Activity {
                 loginManager.registerCallback(callbackManager, loginCallback);
             }
         });
-        //        btn_Facebook_Login = (LoginButton) findViewById(R.id.login_button);
-//        btn_Facebook_Login.setReadPermissions(Arrays.asList("public_profile", "email"));
-//        btn_Facebook_Login.registerCallback(callbackManager, loginCallack);
-
     }
     public class LoginCallback implements FacebookCallback<LoginResult>
     {
@@ -113,12 +105,7 @@ public class LoginActivity extends Activity {
             auth.signInWithCredential(credential).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    RetrofitAPI apiInterface = RetrofitClient.getApiService();
                     if(task.isSuccessful()){
-                        //Login success
-//                        Log.d("Success", "signInWithCredential:Success");
-//                        String email = auth.getCurrentUser().getEmail();
-//                        Log.e("Success", email);
                         String displayName = auth.getCurrentUser().getDisplayName();
                         Log.e("Success", displayName);
                         Uri photoUrl = auth.getCurrentUser().getPhotoUrl();
@@ -130,7 +117,6 @@ public class LoginActivity extends Activity {
                         Users user = new Users(uid);
                         user.setName(displayName);
                         user.setProfile(photoUrl.toString());
-//                        Users user = new User(uid, email, method, displayName);
                         //Retrofit use
 
                         Call<Users> call = RetrofitClient.getApiService().usersave(user);
@@ -138,15 +124,11 @@ public class LoginActivity extends Activity {
                             @Override
                             public void onResponse(Call<Users> call, Response<Users> response) {
                                 if (response.isSuccessful()){
-                                    Log.e("Login Activity", "dddd login ok");
-//                                Log.e("ta", "dddd " + response.body().getContacts());
 //
                                     temp_name =  response.body().getUid();
                                     temp_number = response.body().getContacts();
-//                                    temp_gallery = response.body().getGallery();
 
                                     user.setContacts(temp_number);
-//                                    user.setGallery(temp_gallery);
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     intent.putExtra("user", user);
                                     startActivity(intent);
@@ -154,7 +136,6 @@ public class LoginActivity extends Activity {
 
                                 }
                                 else{
-                                    Log.e("Login Activity", "dddd login fail");
                                 }
 
                             }

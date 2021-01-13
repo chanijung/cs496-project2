@@ -34,7 +34,6 @@ public class FriendMaker extends Activity {
         setContentView(R.layout.activity_friendmaker);
 
         user = (Users) getIntent().getSerializableExtra("user");
-
         edit_name = (EditText) findViewById(R.id.edit_name);
         search_btn = (ImageButton) findViewById(R.id.search_btn);
 
@@ -48,12 +47,10 @@ public class FriendMaker extends Activity {
                 friend = new Users();
                 String friend_name = edit_name.getText().toString();
                 friend.setName(friend_name);
-                Log.e("Get name", friend.getName());
                 call = apiInterface.findfriend(friend);
                 call.enqueue(new Callback<Users>() {
                     @Override
                     public void onResponse(Call<Users> call, Response<Users> response) {
-                        Log.e( "findfriend", "dddd findfriend ok");
                         if (response.body() != null) {
                             FriendSearchAdapter adapter = new FriendSearchAdapter(user, friend);
                             ListView listview = (ListView) findViewById(R.id.listView_samename);
@@ -69,7 +66,6 @@ public class FriendMaker extends Activity {
                     }
                     @Override
                     public void onFailure(Call<Users> call, Throwable t) {
-                        Log.e("findfriend", "dddd findfriend fail");
                     }
                 });
             }

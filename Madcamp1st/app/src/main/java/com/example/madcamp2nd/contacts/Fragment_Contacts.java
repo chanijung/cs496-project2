@@ -86,37 +86,6 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//         db에 접근해서 연락처 가져옴
-//        apiInterface = RetrofitClient.getApiService();
-//        Log.e("tag", "In fragment_contacts"+user.getUid());
-//        user.setUid("uid1");
-//        call = apiInterface.usersave(user);
-//        call.enqueue(new Callback<Users>() {
-//            @Override
-//            public void onResponse(Call<Users> call, Response<Users> response) {
-//                Log.e("ta", "dddd contact ok");
-//                Log.e("ta", "dddd " + response.body().getUid());
-//                temp_number = response.body().getContacts();
-//
-//                Log.e("Fragment_Contacts", "dddd temp_number :  " + temp_number);
-//                user.setContacts(temp_number);
-//                // List<List<String>> 을 Contact[]로 바꾸는 과정
-//                ArrayList<Contact> temp_contacts = new ArrayList<>();
-//                for (int x = 0; x < temp_number.size(); x++) {
-//                    temp_contacts.add(new Contact( temp_number.get(x).get(0), temp_number.get(x).get(1)));
-//                }
-//                db_contacts = temp_contacts.toArray(new Contact[0]);
-//
-//                onPermissionGranted_contacts(db_contacts);
-//            }
-//            @Override
-//            public void onFailure(Call<Users> call, Throwable t) {
-//                Log.e("ta", "dddd contact fail");
-//            }
-//        });
-
-        Log.e("Fragment_contacts", user.getUid());
-        Log.e("Fragment_contacts", String.valueOf(user.getContacts()));
         temp_number = user.getContacts();
         temp_contacts = new ArrayList<>();
         for (int x = 0; x < temp_number.size(); x++) {
@@ -131,9 +100,7 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
 
     }
 
-    private void onPermissionGranted_contacts(Contact[] contactforshow) { // db에서 가져온 연락처 보여줌
-        Log.e("tag", "dddd a");
-
+    private void onPermissionGranted_contacts(Contact[] contactforshow) {
         showContacts(contactforshow); // DB에서 받아온 연락처를 띄워줌
 
         SearchView searchView = mView.findViewById(R.id.searchView_contacts);
@@ -197,12 +164,10 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.floatingActionButton_contacts: // Fab 버튼 닫기, 열기
-                Log.e("2", "touch");
                 toggleFab();
                 // 동기화 작업, db에서 받고, 띄워줘야함.
                 break;
             case R.id.floatingActionButton_synchronization_contacts: // 동기화 버튼 누르면!
-                Log.e("2", "contact");
                 boolean permissionReadContacts = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
                 boolean permissionReadExternalStorage = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
         
@@ -216,10 +181,6 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
                 else if(!permissionReadExternalStorage)
                     requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
                 else {
-                    Log.e("2", "contact");
-
-//                    if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-                        Log.e("2", "get contacts");// 동기화 작업, db에서 받고, 띄워줘야함.
                         apiInterface = RetrofitClient.getApiService();
                         phone_contacts = loadContacts();
                         user = new Users(user.getUid(), phone_contacts);
@@ -230,10 +191,7 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
                         call.enqueue(new Callback<Users>() {
                             @Override
                             public void onResponse(Call<Users> call, Response<Users> response) {
-                                Log.e("Fragment_Contacts", "dddd login ok");
-                                Log.e("Fragment_Contacts", "dddd " + response.body().getUid());
                                 temp_number = response.body().getContacts();
-                                Log.e("Fragment_Contacts", "dddd temp_number :  " + temp_number);
                                 user.setContacts(temp_number);
                                 // List<List<String>> 을 Contact[]로 바꾸는 과정
                                 temp_contacts = new ArrayList<>();
@@ -245,7 +203,6 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
                             }
                             @Override
                             public void onFailure(Call<Users> call, Throwable t) {
-                                Log.e("Fragment_Contacts", "dddd login fail");
                             }
                         });
                     }
@@ -256,7 +213,6 @@ public class Fragment_Contacts extends Fragment implements View.OnClickListener 
         }
     }
     private void toggleFab() {
-        Log.d("2", "toggleFab");
         if (isFabOpen) {
             fab_contacts.setImageResource(R.drawable.icon_plus);
             fab_synchronization.startAnimation(fab_close);
